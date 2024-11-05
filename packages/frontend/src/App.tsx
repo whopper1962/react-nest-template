@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { Home } from "./views/Home";
 import { NotFound } from "./views/NotFound";
@@ -14,7 +10,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/not-found",
-    element: <NotFound/>,
+    element: <NotFound />,
   },
   {
     path: "*",
