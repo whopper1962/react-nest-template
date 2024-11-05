@@ -1,7 +1,9 @@
+import { VerificationCode } from "src/auth/entities/verification-code.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -14,7 +16,7 @@ export class User {
   @Column({ unique: true })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   profileImage: string;
 
   @Column({ type: "text", nullable: true })
@@ -34,4 +36,7 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => VerificationCode, (verificationCode) => verificationCode.user)
+  verificationCodes: VerificationCode[];
 }
