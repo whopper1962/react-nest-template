@@ -12,7 +12,7 @@ services:
       - "./packages/frontend/src:/usr/src/app/src"
     networks:
       - bp-network
-    command: "npm start"
+    command: "npm run dev"
 
   backend:
     container_name: backend
