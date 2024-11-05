@@ -6,6 +6,7 @@ import { JwtModule } from "@nestjs/jwt";
 // import { MailerModule } from '@nestjs-modules/mailer';
 import { User } from "src/user/entities/user.entity";
 import { VerificationCode } from "./entities/verification-code.entity";
+import { JwtAuthGuard } from "./guards/jwt-auth.guard";
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { VerificationCode } from "./entities/verification-code.entity";
     }),
     // MailerModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, JwtAuthGuard],
   controllers: [AuthController],
 })
 export class AuthModule {}

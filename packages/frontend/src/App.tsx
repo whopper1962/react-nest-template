@@ -1,42 +1,33 @@
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import "./App.scss";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "./views/Home";
 import { NotFound } from "./views/NotFound";
 import { SignUp } from "./views/SignUp";
 import { SignIn } from "./views/SignIn";
 import { SignUpVerify } from "./views/SignUpVerify";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-  {
-    path: "/signup/verify",
-    element: <SignUpVerify />,
-  },
-  {
-    path: "/signin",
-    element: <SignIn />,
-  },
-  {
-    path: "/not-found",
-    element: <NotFound />,
-  },
-  {
-    path: "*",
-    element: <Navigate to="/not-found" />,
-  },
-]);
+import "./App.scss";
+import { useContext } from "react";
+import { AuthContext } from "./providers/AuthProvider";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { Top } from "./views/Top";
 
 function App() {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) return <h1>Loading...</h1>;
+
   return (
     <>
-      <RouterProvider router={router} />
+      <Routes>
+        <Route path="/" element={<Top />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup/verify" element={<SignUpVerify />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/not-found" element={<NotFound />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/not-found" />} />
+      </Routes>
     </>
   );
 }

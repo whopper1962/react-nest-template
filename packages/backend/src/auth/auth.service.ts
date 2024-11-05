@@ -17,12 +17,16 @@ export class AuthService {
     private readonly verificationCodeRepository: Repository<VerificationCode>,
     private readonly jwtService: JwtService,
     // private readonly mailerService: MailerService,
-  ) { }
+  ) {}
 
   async signUp(createUserDto: CreateUserDto) {
     const { password, ...userData } = createUserDto;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = this.userRepository.create({ ...userData, isVerified: false, password: hashedPassword });
+    const user = this.userRepository.create({
+      ...userData,
+      isVerified: false,
+      password: hashedPassword,
+    });
     await this.userRepository.save(user);
 
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -55,7 +59,11 @@ export class AuthService {
         user: { id: user.id },
       },
     });
-    if (!verificationCode || verificationCode.code !== code || verificationCode.expiresAt < new Date()) {
+    if (
+      !verificationCode ||
+      verificationCode.code !== code ||
+      verificationCode.expiresAt < new Date()
+    ) {
       throw new UnauthorizedException("Invalid or expired verification code");
     }
 

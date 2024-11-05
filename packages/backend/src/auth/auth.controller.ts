@@ -1,7 +1,10 @@
-import { Controller, Post, Body, Res } from "@nestjs/common";
+import { Controller, Post, Body, Res, Get, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Response } from "express";
 import { CreateUserDto } from "src/user/dto/create-user.dto";
+import { JwtAuthGuard } from "./guards/jwt-auth.guard";
+import { GetUser } from "./decorators/get-user.decorator";
+import { User } from "src/user/entities/user.entity";
 
 @Controller("auth")
 export class AuthController {
@@ -25,5 +28,11 @@ export class AuthController {
     const { token } = await this.authService.signIn(email, password);
     res.cookie("token", token, { httpOnly: true });
     return res.send({ message: "Logged in successfully" });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("user")
+  async user(@GetUser() user: User) {
+    return user;
   }
 }

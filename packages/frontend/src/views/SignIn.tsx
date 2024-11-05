@@ -1,11 +1,13 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import "./SignIn.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 export const SignIn: React.FC = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+  const { refresh } = useContext(AuthContext);
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     try {
@@ -20,7 +22,8 @@ export const SignIn: React.FC = () => {
       });
       if (!res.ok) throw new Error("Failed");
 
-      navigate("/");
+      await refresh();
+      navigate("/home");
     } catch (err) {
       console.error(err);
     }
