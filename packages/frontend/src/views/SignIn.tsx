@@ -1,13 +1,15 @@
 import React, { useContext, useRef } from "react";
 import "./SignIn.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
 export const SignIn: React.FC = () => {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-  const { refresh } = useContext(AuthContext);
+  const { refresh, user } = useContext(AuthContext);
+
+  if (user) return <Navigate to={"/home"} />;
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     try {

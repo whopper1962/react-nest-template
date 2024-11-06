@@ -1,6 +1,6 @@
 export class CurrentUserDto {
   id: string;
-  username: string;
+  name: string;
   profileImage: string;
   email: string;
 }

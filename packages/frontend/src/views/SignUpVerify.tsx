@@ -1,11 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 import "./SignUpVerify.scss";
-import { Link } from "react-router-dom";
 
 export const SignUpVerify: React.FC = () => {
   const signupEmail = sessionStorage.getItem("signup_email");
   const [success, setSuccess] = useState<boolean>(false);
   const verificationCodeRef = useRef<HTMLInputElement | null>(null);
+  const { user } = useContext(AuthContext);
+
+  if (user) return <Navigate to={"/home"} />;
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     try {

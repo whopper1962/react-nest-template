@@ -1,3 +1,14 @@
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 :root {
   --app-font: 'Courier New', Courier, monospace
 }

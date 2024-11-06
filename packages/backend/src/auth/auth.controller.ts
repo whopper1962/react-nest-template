@@ -31,6 +31,13 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post("signout")
+  async signOut(@Res() res: Response) {
+    res.clearCookie("token", { httpOnly: true });
+    return res.send({ message: "Logged out successfully" });
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get("user")
   async user(@GetUser() user: User) {
     return user;

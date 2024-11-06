@@ -35,7 +35,7 @@ export class JwtAuthGuard implements CanActivate {
 
       const userSummary: CurrentUserDto = {
         id: user.id,
-        username: user.name,
+        name: user.name,
         email: user.email,
         profileImage: user.profileImage || null,
       };
