@@ -28,6 +28,7 @@ function App() {
           <Route path="/not-found" element={<NotFound />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/rooms" element={<Home />} />
           </Route>
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>

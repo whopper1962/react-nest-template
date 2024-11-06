@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./NavBar.scss";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { ConfirmDialog } from "../components/ConfirmDialog";
 
-export const NavBar: React.FC = () => {
+export const NavBar: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { user, refresh } = useContext(AuthContext);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleSignOut = async () => {
     try {
@@ -15,6 +17,7 @@ export const NavBar: React.FC = () => {
       if (!res.ok) throw new Error("Failed");
 
       refresh();
+      setOpen(false);
       navigate("/signin");
     } catch (e) {
       console.error(e);
@@ -26,11 +29,18 @@ export const NavBar: React.FC = () => {
       {user && (
         <>
           <p>{user.name}</p>
-          <button type="button" onClick={handleSignOut}>
+          <button type="button" onClick={() => setOpen(true)}>
             Signout
           </button>
         </>
       )}
+      <ConfirmDialog
+        open={open}
+        setOpen={setOpen}
+        message={"signout?"}
+        okText={"Signout"}
+        onConfirm={handleSignOut}
+      />
     </div>
   );
-};
+});

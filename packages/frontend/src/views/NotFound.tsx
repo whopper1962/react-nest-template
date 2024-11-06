@@ -5,7 +5,7 @@ export const NotFound: React.FC = () => {
   return (
     <div>
       <h2>Page not found</h2>
-      <Link to={"/"}>Home</Link>
+      <Link to={"/home"}>Home</Link>
     </div>
   );
 };
